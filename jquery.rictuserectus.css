@@ -1,0 +1,41 @@
+.re-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background-color: rgba( 0, 0, 0, 0.6 );
+}
+
+.re-mask {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.re-scroll {
+  height: 100%;
+  width: 100%;
+}
+
+.re-resource-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.re-close-icon {
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin-left: 5px;
+  width: 10px;
+  height: 12px;
+  top: 10px;
+  right: 10px;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-position: center 2px;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAALCAQAAADsZ9STAAAAhklEQVR4ATXNMQ5AUBAE0Cn0CtUmDkAjEQrVj0b144wOoXALdCL/MGO/zTabnVfMAJBNLikFAr2XpkwtO9a3QlnfHVvKhv4ZOPycKf/9g3MOydgopHMGC2cnFiBiNb2O0xurqEN/vaNNwimkkJyx7N7l3csONuth9Ta5HmxAZY5K+ukdNeEDEiBrgNsMixYAAAAASUVORK5CYII=);
+}

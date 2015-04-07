@@ -1,0 +1,29 @@
+{
+  "name": "jquery.rictuserectus",
+  "version": "0.0.1",
+  "description": "Navigate large images by moving your mouse.",
+  "main": "./jquery.rictuserectus.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aef-/jquery.rictuserectus.git"
+  },
+  "author": "aef-",
+  "bugs": {
+    "url": "https://github.com/aef-/jquery.rictuserectus/issues"
+  },
+	"files": [
+		"jquery.rictuserectus.js",
+		"jquery.rictuserectus.css",
+		"README.md"
+	],
+  "keywords": [ "lightbox", "image", "image view", "zoom", "modal", "image preview", "image zoom" ],
+  "homepage": "https://github.com/aef-/jquery.rictuserectus",
+	"jam": {
+		"dependencies": {
+			"jquery": ">=1.9.1"
+		}
+	}
+}
