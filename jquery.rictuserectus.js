@@ -1,6 +1,6 @@
-/* jquery.rictuserectus v.0.2.1
- * A nice and tidy tag manager.
- * by aef
+/* jquery.rictuserectus v.0.0.1
+ * Navigate large images by moving your mouse.
+ * by aef-
  */
 ( function( $, window, document, undefined ) {
   var pluginName = "rictuserectus",
@@ -26,11 +26,13 @@
 
     this.$element = $element.clone( ).addClass( "re-resource" );
     this.$body = $( "body" );
+    this.$document = $( "document" );
     this.$window = $( window );
     this.windowHeight = this.$window.height( );
     this.windowWidth = this.$window.width( );
     this.$container = $( this.template );
     this.$resourceContainer = this.$container.find( ".re-resource-container" );
+    this.hasElementBeenShown = false; //browser caches images -- load does not work
     if( Hammer ) {
       this.hammer = new Hammer( this.$container[ 0 ], { } );
     }
@@ -40,14 +42,21 @@
 
   RictusErectus.prototype.removeEvents = function( ) {
     this.$container.off( "mousemove" );
+    this.$window.off( "touchmove", this.onTouchMove );
   };
 
   RictusErectus.prototype.addEvents = function( ) {
-    //this.$container.on( "mousemove", $.proxy( this.onMouseMove, this ) );
+    this.$container.on( "mousemove", $.proxy( this.onMouseMove, this ) );
     this.$container.on( "click", $.proxy( this.hide, this ) );
+    this.$window.on( "touchmove", this.onTouchMove );
     if( this.hammer ) {
       this.hammer.on( "pan", $.proxy( this.scrollImage, this ) );
     }
+  };
+
+  RictusErectus.prototype.onTouchMove = function( e ) {
+    e.preventDefault( ); //disable scrolling on mobile devises
+    return false;
   };
 
   RictusErectus.prototype.onMouseMove = function( e ) {
@@ -62,8 +71,8 @@
       mouseY = e.center.y;
     }
     else {
-      mouseX = e.pageX;
-      mouseY = e.pageY;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     }
 
     var windowWidth = this.$container.width( ),
@@ -87,28 +96,32 @@
 
   RictusErectus.prototype.show = function( ) {
     var img;
-    if( this.$element.data( "large-image" ) || this.$element[ 0 ].tagName === "IMG" ) {
-      img = new Image( );
-      img.onload = $.proxy( this.showElement, this );
-      img.src = this.$element.data( "large-image" ) || this.$element.attr( "src" );
+    if( this.$element.data( "large-image" ) )
+       this.$element = $( "<img src='" + this.$element.data( "large-image" ) + "'/>" );
+
+    if( this.$element[ 0 ].tagName === "IMG" && !this.hasElementBeenShown) {
+      this.$element.load( $.proxy( this.showElement, this ) );
     }
     else {
       this.showElement( ); 
     }
-
   };
 
   RictusErectus.prototype.showElement = function( ) {
+    this.hasElementBeenShown = true;
     this.origBodyOverflow = this.$body.css( "overflow" );
     this.$body.css( "overflow", "hidden" );
     this.$element.appendTo( this.$resourceContainer );
-    this.$container.css( 'opacity', 0 );
-    this.$container.appendTo( this.$body );
+    this.$container.show( )
+                   .css( 'opacity', 0 )
+                   .appendTo( this.$body );
     this.$resourceContainer.css( { 
       top: this.$container.height( ) / 2 - this.$element.innerHeight( ) / 2 ,
       left: this.$container.width( ) / 2 - this.$element.innerWidth( ) / 2 
     } );
     this.$container.animate( { opacity: 1 } );
+
+    this.addEvents( );
   };
 
   RictusErectus.prototype.hide = function( ) {
@@ -122,7 +135,6 @@
   };
 
   RictusErectus.prototype.setup = function( ) {
-    this.addEvents( );
   };
 
   $.fn[ pluginName ] = function( optionsOrMethod ) {

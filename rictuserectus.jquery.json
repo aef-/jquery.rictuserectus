@@ -14,7 +14,7 @@
   "dependencies": {
     "jquery": ">=1.9.1"
   },
-  "description": "A nice and tidy tag manager.",
+  "description": "Navigate large images by moving your mouse.",
   "keywords": [ "lightbox", "image", "image view", "zoom", "modal", "image preview", "image zoom" ],
   "homepage": "https://github.com/aef-/jquery.rictuserectus",
   "docs": "http://aef-.github.io/jquery.rictuserectus",
