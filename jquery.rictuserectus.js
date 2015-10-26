@@ -100,7 +100,7 @@
        this.$element = $( "<img src='" + this.$element.data( "large-image" ) + "'/>" );
 
     if( this.$element[ 0 ].tagName === "IMG" && !this.hasElementBeenShown) {
-      this.$element.load( $.proxy( this.showElement, this ) );
+      this.$element.load( this.showElement.bind( this ) );
     }
     else {
       this.showElement( ); 
@@ -109,6 +109,7 @@
 
   RictusErectus.prototype.showElement = function( ) {
     this.hasElementBeenShown = true;
+    this.$element.trigger( "re:shown" );
     this.origBodyOverflow = this.$body.css( "overflow" );
     this.$body.css( "overflow", "hidden" );
     this.$element.appendTo( this.$resourceContainer );
